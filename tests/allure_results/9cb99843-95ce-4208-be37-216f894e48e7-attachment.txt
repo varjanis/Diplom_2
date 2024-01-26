@@ -1,0 +1,1 @@
+{'success': True, 'orders': [{'_id': '65b3cae79ed280001b3ac744', 'ingredients': ['61c0c5a71d1f82001bdaaa6e'], 'status': 'done', 'name': 'Люминесцентный бургер', 'createdAt': '2024-01-26T15:08:23.577Z', 'updatedAt': '2024-01-26T15:08:23.869Z', 'number': 37797}], 'total': 37797, 'totalToday': 49}

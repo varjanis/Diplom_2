@@ -1,9 +1,7 @@
 import requests
-import datafile
+import urls
 import auxiliary_functions
 import allure
-import allure_pytest
-import json
 
 
 class TestUserLogin:
@@ -21,7 +19,7 @@ class TestUserLogin:
             "name": name
         }
 
-        response = requests.post(datafile.register_endpoint, data=payload)
+        response = requests.post(urls.register_endpoint, data=payload)
 
         access_token = response.json()["accessToken"]
 
@@ -33,7 +31,7 @@ class TestUserLogin:
             "password": password
         }
 
-        login_response = requests.post(datafile.login_user_endpoint, data=login_payload)
+        login_response = requests.post(urls.login_user_endpoint, data=login_payload)
 
         assert login_response.status_code == 200
         assert login_response.json()["success"] == True
@@ -52,7 +50,7 @@ class TestUserLogin:
             "name": name
         }
 
-        response = requests.post(datafile.register_endpoint, data=payload)
+        response = requests.post(urls.register_endpoint, data=payload)
 
         access_token = response.json()["accessToken"]
 
@@ -64,7 +62,7 @@ class TestUserLogin:
             "password": password
         }
 
-        login_response = requests.post(datafile.login_user_endpoint, data=login_payload)
+        login_response = requests.post(urls.login_user_endpoint, data=login_payload)
 
         assert login_response.status_code == 401
         assert login_response.json()["success"] == False
@@ -85,7 +83,7 @@ class TestUserLogin:
             "name": name
         }
 
-        response = requests.post(datafile.register_endpoint, data=payload)
+        response = requests.post(urls.register_endpoint, data=payload)
 
         access_token = response.json()["accessToken"]
 
@@ -97,7 +95,7 @@ class TestUserLogin:
             "password": "dffnjbhjhkvhjvhj"
         }
 
-        login_response = requests.post(datafile.login_user_endpoint, data=login_payload)
+        login_response = requests.post(urls.login_user_endpoint, data=login_payload)
 
         assert login_response.status_code == 401
         assert login_response.json()["success"] == False

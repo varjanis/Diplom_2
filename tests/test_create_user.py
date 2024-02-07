@@ -1,9 +1,7 @@
 import requests
-import datafile
+import urls
 import auxiliary_functions
 import allure
-import allure_pytest
-import json
 
 
 class TestCreateUser:
@@ -21,7 +19,7 @@ class TestCreateUser:
             "name": name
         }
 
-        response = requests.post(datafile.register_endpoint, data=payload)
+        response = requests.post(urls.register_endpoint, data=payload)
 
         access_token = response.json()["accessToken"]
 
@@ -43,12 +41,12 @@ class TestCreateUser:
             "name": name
         }
 
-        response = requests.post(datafile.register_endpoint, data=payload)
+        response = requests.post(urls.register_endpoint, data=payload)
 
         assert response.status_code == 200
         assert response.json()["success"] == True
 
-        response = requests.post(datafile.register_endpoint, data=payload)
+        response = requests.post(urls.register_endpoint, data=payload)
 
         assert response.status_code == 403
         assert response.json()["success"] == False
@@ -66,7 +64,7 @@ class TestCreateUser:
             "name": name
         }
 
-        response = requests.post(datafile.register_endpoint, data=payload)
+        response = requests.post(urls.register_endpoint, data=payload)
 
         assert response.status_code == 403
         assert response.json()["success"] == False
@@ -85,7 +83,7 @@ class TestCreateUser:
             "name": name
         }
 
-        response = requests.post(datafile.register_endpoint, data=payload)
+        response = requests.post(urls.register_endpoint, data=payload)
 
         assert response.status_code == 403
         assert response.json()["success"] == False
@@ -103,7 +101,7 @@ class TestCreateUser:
             "name": ""
         }
 
-        response = requests.post(datafile.register_endpoint, data=payload)
+        response = requests.post(urls.register_endpoint, data=payload)
 
         assert response.status_code == 403
         assert response.json()["success"] == False

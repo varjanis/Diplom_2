@@ -1,19 +1,15 @@
 import requests
-import datafile
+import urls
 import auxiliary_functions
 import allure
-import allure_pytest
-import json
 
 
 class TestChangeUserData:
 
     @allure.title('Изменить имя у авторизованного пользователя')
-    def test_change_name_authorized_success(self):
+    def test_change_name_authorized_success(self, setup_user):
 
-        response = auxiliary_functions.create_user()
-
-        access_token = response.json()["accessToken"]
+        user_data, token = setup_user
 
         new_name = auxiliary_functions.generate_random_name()
 
@@ -21,23 +17,20 @@ class TestChangeUserData:
             "name": new_name
         }
 
-        data_change_response = requests.patch(datafile.user_endpoint, headers={'Authorization': access_token}, data=data_change_payload)
+        data_change_response = requests.patch(urls.user_endpoint, headers={'Authorization': token}, data=data_change_payload)
 
         assert data_change_response.status_code == 200
         assert data_change_response.json()["success"] == True
         assert data_change_response.json()["user"]["name"] == new_name
 
-        auxiliary_functions.delete_user(access_token)
 
     @allure.title('Изменить почту у авторизованного пользователя')
-    def test_change_email_authorized_success(self):
+    def test_change_email_authorized_success(self, setup_user):
 
-        response = auxiliary_functions.create_user()
+        user_data, token = setup_user
 
-        access_token = response.json()["accessToken"]
-
-        assert response.status_code == 200
-        assert response.json()["success"] == True
+        assert user_data.status_code == 200
+        assert user_data.json()["success"] == True
 
         new_email = auxiliary_functions.generate_random_email()
 
@@ -45,21 +38,15 @@ class TestChangeUserData:
             "email": new_email
         }
 
-        data_change_response = requests.patch(datafile.user_endpoint, headers={'Authorization': access_token},
+        data_change_response = requests.patch(urls.user_endpoint, headers={'Authorization': token},
                                       data=data_change_payload)
 
         assert data_change_response.status_code == 200
         assert data_change_response.json()["success"] == True
         assert data_change_response.json()["user"]["email"] == new_email
 
-        auxiliary_functions.delete_user(access_token)
-
     @allure.title('Изменить имя у неавторизованного пользователя')
-    def test_change_name_unauthorized_fail(self):
-
-        response = auxiliary_functions.create_user()
-
-        access_token = response.json()["accessToken"]
+    def test_change_name_unauthorized_fail(self, setup_user):
 
         new_name = auxiliary_functions.generate_random_name()
 
@@ -67,20 +54,15 @@ class TestChangeUserData:
             "email": new_name
         }
 
-        data_change_response = requests.patch(datafile.user_endpoint,
+        data_change_response = requests.patch(urls.user_endpoint,
                                               data=data_change_payload)
 
         assert data_change_response.status_code == 401
         assert data_change_response.json()["success"] == False
         assert data_change_response.json()["message"] == "You should be authorised"
 
-        auxiliary_functions.delete_user(access_token)
-
     @allure.title('Изменить почту у неавторизованного пользователя')
-    def test_change_email_unauthorized_fail(self):
-        response = auxiliary_functions.create_user()
-
-        access_token = response.json()["accessToken"]
+    def test_change_email_unauthorized_fail(self, setup_user):
 
         new_email = auxiliary_functions.generate_random_email()
 
@@ -88,13 +70,11 @@ class TestChangeUserData:
                 "email": new_email
             }
 
-        data_change_response = requests.patch(datafile.user_endpoint, data=data_change_payload)
+        data_change_response = requests.patch(urls.user_endpoint, data=data_change_payload)
 
         assert data_change_response.status_code == 401
         assert data_change_response.json()["success"] == False
         assert data_change_response.json()["message"] == "You should be authorised"
-
-        auxiliary_functions.delete_user(access_token)
 
 
 

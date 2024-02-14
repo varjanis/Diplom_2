@@ -1,0 +1,2 @@
+{'success': True, 'orders': [{'_id': '65c374c09ed280001b3b4ac5', 'ingredients': ['61c0c5a71d1f82001bdaaa6e'], 'status': 'done', 'name': 'Люминесцентный бургер', 'createdAt': '2024-02-07T12:17:04.391Z', 'updatedAt': '2024-02-07T12:17:04.688Z', 'number': 39749}], 'total': 39749, 'totalToday': 156}
+Тестовый пользователь успешно удален
